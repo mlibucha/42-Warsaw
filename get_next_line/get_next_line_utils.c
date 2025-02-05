@@ -6,7 +6,7 @@
 /*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 22:29:00 by mlibucha          #+#    #+#             */
-/*   Updated: 2024/12/29 23:09:31 by mlibucha         ###   ########.fr       */
+/*   Updated: 2024/12/29 23:19:54 by mlibucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_list	*find_last_node(t_list *list)
 	return (list);
 }
 
-void	ft_dealloc(t_list **list, t_list *clean_node, char *buf)
+void	ft_free_nodes(t_list **list, t_list *clean_node, char *buf)
 {
 	t_list	*tmp;
 

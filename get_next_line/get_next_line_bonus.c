@@ -6,7 +6,7 @@
 /*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 19:11:35 by mlibucha          #+#    #+#             */
-/*   Updated: 2024/12/29 23:04:31 by mlibucha         ###   ########.fr       */
+/*   Updated: 2024/12/29 23:20:57 by mlibucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	clear_nodes(t_list **list)
 	buf[k] = '\0';
 	clean_node->str_buf = buf;
 	clean_node->next = NULL;
-	ft_dealloc(list, clean_node, buf);
+	ft_free_nodes(list, clean_node, buf);
 }
 
 char	*get_line(t_list *list)

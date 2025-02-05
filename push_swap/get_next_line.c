@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 22:28:40 by mlibucha          #+#    #+#             */
-/*   Updated: 2024/12/29 23:16:10 by mlibucha         ###   ########.fr       */
+/*   Updated: 2025/01/29 01:59:10 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "checker.h"
 
 char	*get_line(t_list *list)
 {
@@ -61,7 +61,7 @@ void	ft_createlist(t_list **list, int fd)
 		buf = malloc(BUFFER_SIZE + 1);
 		if (!buf)
 		{
-			ft_free_nodes(list, NULL, NULL);
+			ft_dealloc(list, NULL, NULL);
 			return ;
 		}
 		char_read = read(fd, buf, BUFFER_SIZE);
@@ -89,7 +89,7 @@ void	clear_nodes(t_list **list)
 	buf = malloc(BUFFER_SIZE + 1);
 	clean_node = malloc(sizeof(t_list));
 	if (!buf || !clean_node)
-		return (free(buf), free(clean_node), ft_free_nodes(list, NULL, NULL));
+		return (free(buf), free(clean_node), ft_dealloc(list, NULL, NULL));
 	i = -1;
 	k = 0;
 	while (last_node->str_buf[++i] && last_node->str_buf[i] != '\n')
@@ -99,7 +99,7 @@ void	clear_nodes(t_list **list)
 	buf[k] = '\0';
 	clean_node->str_buf = buf;
 	clean_node->next = NULL;
-	ft_free_nodes(list, clean_node, buf);
+	ft_dealloc(list, clean_node, buf);
 }
 
 char	*get_next_line(int fd)

@@ -6,7 +6,7 @@
 /*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:23:33 by e                 #+#    #+#             */
-/*   Updated: 2024/12/29 23:04:14 by mlibucha         ###   ########.fr       */
+/*   Updated: 2024/12/29 23:18:29 by mlibucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ void	copy_str(t_list *list, char *str);
 void	clear_nodes(t_list **list);
 int		found_newline(t_list *list);
 t_list	*find_last_node(t_list *list);
-void	ft_dealloc(t_list	**list, t_list *clean_node, char *buf);
+void	ft_free_nodes(t_list	**list, t_list *clean_node, char *buf);
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
-#endif
-
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 #endif

@@ -1,0 +1,9 @@
+{
+	"files.associations": {
+		"stdlib.h": "c",
+		"mini_talk.h": "c",
+		"signal.h": "c",
+		"cstdlib": "c"
+	},
+	"C_Cpp.errorSquiggles": "disabled"
+}
