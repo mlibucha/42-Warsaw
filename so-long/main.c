@@ -5,48 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/03 16:01:35 by e                 #+#    #+#             */
-/*   Updated: 2025/02/04 13:20:55 by e                ###   ########.fr       */
+/*   Created: 2025/02/07 15:04:00 by e                 #+#    #+#             */
+/*   Updated: 2025/02/07 17:26:02 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <mlx.h>
-#include <stdlib.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-#define ESC_KEY 53
-
-int handle_keypress(int keycode, void *param)
+int	main(void)
 {
-	if (keycode == ESC_KEY)
-	{
-		mlx_destroy_window(param, *(void **)param);
-		exit(0);
-	}
-	return 0;
-}
+	t_game	game;
 
-int main(void)
-{
-	void *mlx;
-	void *win;
-
-	mlx = mlx_init();
-	if (!mlx)
+	game.mlx = mlx_init();
+	if (!game.mlx)
 		return (1);
-	win = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "MiniLibX Window");
-	if (!win)
-	{
-		mlx_destroy_display(mlx);
-		free(mlx);
-		return (1);
-	}
-	mlx_hook(win, 2, 1L << 0, handle_keypress, mlx);
-	mlx_loop(mlx);
-	mlx_destroy_window(mlx, win);
-	mlx_destroy_display(mlx);
-	free(mlx);
-	return 0;
+	game.win = mlx_new_window(game.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "so_long");
+	if (!game.win)
+		return (cleanup(&game), 1);
+	if (!parse_map("map.txt", &game.map))
+		return (cleanup(&game), 1);
+	calculate_tile_size(&game);
+	load_textures(&game);
+	render_map(&game);
+	mlx_hook(game.win, 2, 1L << 0, handle_keypress, &game);
+	mlx_loop(game.mlx);
+	cleanup(&game);
+	return (0);
 }

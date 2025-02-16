@@ -3,7 +3,8 @@
 		"stdlib.h": "c",
 		"mini_talk.h": "c",
 		"signal.h": "c",
-		"cstdlib": "c"
+		"cstdlib": "c",
+		"types.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }
