@@ -2,7 +2,7 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = -Wall -g
+CFLAGS = -Wall 
 
 # Path to the minilibx-linux directory (relative to the Makefile)
 MLX_DIR = ./minilibx-linux

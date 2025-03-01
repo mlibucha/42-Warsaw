@@ -1,24 +1,25 @@
 #include "so_long.h"
 
-void	calculate_tile_size(t_game *game)
+void calculate_tile_size(t_game *game)
 {
-	int	tile_width;
-	int	tile_height;
-
-	tile_width = WINDOW_WIDTH / game->map.width;
-	tile_height = WINDOW_HEIGHT / game->map.height;
-	game->tile_size = (tile_width < tile_height) ? tile_width : tile_height;
-	if (game->tile_size > 64)
-		game->tile_size = 64;
+	int desired_tile_size = 64;
+	game->tile_size = desired_tile_size;
+	game->window_width = game->map.width * game->tile_size;
+	game->window_height = game->map.height * game->tile_size;
+	if (game->window_width < 1 || game->window_height < 1)
+	{
+		printf("Error: Map is too large to fit within the window.\n");
+		cleanup(game);
+		exit(1);
+	}
 }
 
-void	render_map(t_game *game)
+void render_map(t_game *game)
 {
-	int	x;
-	int	y;
-	int	tile_size;
+	int x;
+	int y;
+	int tile_size = game->tile_size;
 
-	tile_size = game->tile_size;
 	y = 0;
 	while (y < game->map.height)
 	{
@@ -26,21 +27,20 @@ void	render_map(t_game *game)
 		while (x < game->map.width)
 		{
 			if (game->map.grid[y][x] == '1')
-				mlx_put_image_to_window(game->mlx, game->win, game->wall_texture,
-					x * tile_size, y * tile_size);
+				mlx_put_image_to_window(game->mlx, game->win, game->wall_texture, x * tile_size, y * tile_size);
 			else if (game->map.grid[y][x] == '0')
-				mlx_put_image_to_window(game->mlx, game->win, game->floor_texture,
-					x * tile_size, y * tile_size);
+				mlx_put_image_to_window(game->mlx, game->win, game->floor_texture, x * tile_size, y * tile_size);
 			x++;
 		}
 		y++;
 	}
+	mlx_put_image_to_window(game->mlx, game->win, game->player_texture, game->player_x * tile_size, game->player_y * tile_size);
 }
 
-static int	count_lines(int fd, t_map *map)
+static int count_lines(int fd, t_map *map)
 {
-	char	*line;
-	int		count;
+	char *line;
+	int count;
 
 	count = 0;
 	while ((line = get_next_line(fd)))
@@ -53,10 +53,10 @@ static int	count_lines(int fd, t_map *map)
 	return (count);
 }
 
-static int	read_map(int fd, t_map *map)
+static int read_map(int fd, t_map *map)
 {
-	char	*line;
-	int		i;
+	char *line;
+	int i;
 
 	map->grid = (char **)malloc(sizeof(char *) * map->height);
 	if (!map->grid)
@@ -73,9 +73,9 @@ static int	read_map(int fd, t_map *map)
 	return (1);
 }
 
-int	parse_map(const char *filename, t_map *map)
+int parse_map(const char *filename, t_map *map)
 {
-	int	fd;
+	int fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -89,23 +89,49 @@ int	parse_map(const char *filename, t_map *map)
 	return (1);
 }
 
-void	load_textures(t_game *game)
+void load_textures(t_game *game)
 {
-	int	width;
-	int	height;
+	int width;
+	int height;
 
-	game->wall_texture = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &width, &height);
-	if (!game->wall_texture)
+	game->wall_texture = mlx_xpm_file_to_image(game->mlx, "textures/floor.xpm", &width, &height);
+	game->floor_texture = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &width, &height);
+	game->player_texture = mlx_xpm_file_to_image(game->mlx, "textures/player.xpm", &width, &height);
+	if (!game->wall_texture || !game->floor_texture || !game->player_texture)
 	{
-		printf("Error: Failed to load wall texture.\n");
+		printf("Error: Failed to load textures.\n");
 		cleanup(game);
 		exit(1);
 	}
-	game->floor_texture = mlx_xpm_file_to_image(game->mlx, "textures/floor.xpm", &width, &height);
-	if (!game->floor_texture)
+}
+
+void generate_map(t_map *map)
+{
+	int y = 0;
+	int x;
+
+	map->width = 20;
+	map->height = 20;
+	map->grid = (char **)malloc(sizeof(char *) * 20);
+	while (y < 20)
 	{
-		printf("Error: Failed to load floor texture.\n");
-		cleanup(game);
-		exit(1);
+		map->grid[y] = (char *)malloc(sizeof(char) * (20 + 1));
+		x = 0;
+		while (x < 20)
+		{
+			if (y == 0 || y == 20 - 1 || x == 0 || x == 20 - 1)
+				map->grid[y][x] = '1';
+			else if (y == 2 || y == 20 - 3 || x == 2 || x == 20 - 3)
+				map->grid[y][x] = '1';
+			else if (y == 5 && x >= 5 && x <= 15)
+				map->grid[y][x] = '1';
+			else if (x == 10 && y >= 5 && y <= 15)
+				map->grid[y][x] = '1';
+			else
+				map->grid[y][x] = '0';
+			x++;
+		}
+		map->grid[y][20] = '\0';
+		y++;
 	}
 }
