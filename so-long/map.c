@@ -18,8 +18,9 @@ void render_map(t_game *game)
 {
 	int x;
 	int y;
-	int tile_size = game->tile_size;
+	int tile_size;
 
+	tile_size = game->tile_size;
 	y = 0;
 	while (y < game->map.height)
 	{
@@ -30,11 +31,16 @@ void render_map(t_game *game)
 				mlx_put_image_to_window(game->mlx, game->win, game->wall_texture, x * tile_size, y * tile_size);
 			else if (game->map.grid[y][x] == '0')
 				mlx_put_image_to_window(game->mlx, game->win, game->floor_texture, x * tile_size, y * tile_size);
+			else if (game->map.grid[y][x] == 'C')
+				mlx_put_image_to_window(game->mlx, game->win, game->cole_texture, x * tile_size, y * tile_size);
+			else if (game->map.grid[y][x] == 'E')
+				mlx_put_image_to_window(game->mlx, game->win, game->exit_texture, x * tile_size, y * tile_size);
 			x++;
 		}
 		y++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->player_texture, game->player_x * tile_size, game->player_y * tile_size);
+	render_enemy(game); // Render the enemy
 }
 
 static int count_lines(int fd, t_map *map)
@@ -53,7 +59,7 @@ static int count_lines(int fd, t_map *map)
 	return (count);
 }
 
-static int read_map(int fd, t_map *map)
+static int read_map(int fd, t_map *map, t_game *game)
 {
 	char *line;
 	int i;
@@ -65,15 +71,26 @@ static int read_map(int fd, t_map *map)
 	while ((line = get_next_line(fd)))
 	{
 		map->grid[i] = ft_strdup(line);
-		free(line);
 		if (!map->grid[i])
 			return (0);
+		int j = 0;
+		while(j < map->width)
+		{
+			j++;
+			if (map->grid[i][j] == 'X')
+			{
+				game->enemy_x = j;
+				game->enemy_y = i;
+				map->grid[i][j] = '0';
+			}
+		}
+		free(line);
 		i++;
 	}
 	return (1);
 }
 
-int parse_map(const char *filename, t_map *map)
+int parse_map(const char *filename, t_map *map, t_game *game)
 {
 	int fd;
 
@@ -83,7 +100,7 @@ int parse_map(const char *filename, t_map *map)
 	map->height = count_lines(fd, map);
 	close(fd);
 	fd = open(filename, O_RDONLY);
-	if (fd < 0 || !read_map(fd, map))
+	if (fd < 0 || !read_map(fd, map, game))
 		return (close(fd), 0);
 	close(fd);
 	return (1);
@@ -97,7 +114,11 @@ void load_textures(t_game *game)
 	game->wall_texture = mlx_xpm_file_to_image(game->mlx, "textures/floor.xpm", &width, &height);
 	game->floor_texture = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &width, &height);
 	game->player_texture = mlx_xpm_file_to_image(game->mlx, "textures/player.xpm", &width, &height);
-	if (!game->wall_texture || !game->floor_texture || !game->player_texture)
+	game->cole_texture = mlx_xpm_file_to_image(game->mlx, "textures/cole.xpm", &width, &height);
+	game->exit_texture = mlx_xpm_file_to_image(game->mlx, "textures/exit.xpm", &width, &height);
+	game->enemy_texture = mlx_xpm_file_to_image(game->mlx, "textures/enemy.xpm", &width, &height);
+	if (!game->wall_texture || !game->floor_texture || !game->player_texture || !game->cole_texture 
+		|| !game->exit_texture)
 	{
 		printf("Error: Failed to load textures.\n");
 		cleanup(game);
@@ -107,11 +128,12 @@ void load_textures(t_game *game)
 
 void generate_map(t_map *map)
 {
-	int y = 0;
+	int y;
 	int x;
 
 	map->width = 20;
 	map->height = 20;
+	y = 0;
 	map->grid = (char **)malloc(sizeof(char *) * 20);
 	while (y < 20)
 	{
