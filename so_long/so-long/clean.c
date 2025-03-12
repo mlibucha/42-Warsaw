@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
+/*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:36:20 by e                 #+#    #+#             */
-/*   Updated: 2025/03/11 20:34:25 by e                ###   ########.fr       */
+/*   Updated: 2025/03/10 20:25:13 by mlibucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "so_long.h"
-
 
 void	mlx_destroy_all(t_game *game)
 {
@@ -20,13 +18,13 @@ void	mlx_destroy_all(t_game *game)
 		mlx_destroy_image(game->mlx, game->wall_texture);
 	if (game->floor_texture)
 		mlx_destroy_image(game->mlx, game->floor_texture);
-	if(game->player_texture)
+	if (game->player_texture)
 		mlx_destroy_image(game->mlx, game->player_texture);
-	if(game->cole_texture)
+	if (game->cole_texture)
 		mlx_destroy_image(game->mlx, game->cole_texture);
-	if(game->exit_texture)
+	if (game->exit_texture)
 		mlx_destroy_image(game->mlx, game->exit_texture);
-	if(game->enemy_texture)
+	if (game->enemy_texture)
 		mlx_destroy_image(game->mlx, game->enemy_texture);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:10:26 by e                 #+#    #+#             */
-/*   Updated: 2025/03/08 15:02:47 by e                ###   ########.fr       */
+/*   Updated: 2025/03/11 20:34:10 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void update_enemy(t_game *game)
         new_x--;
     else if (direction == 3)
         new_x++;
-    if(game->enemy_x == game->player_x && game->enemy_y == game->player_y)
-        lose(game);
+    // if(game->enemy_x == game->player_x && game->enemy_y == game->player_y)
+    //     lose(game);
     if (new_x >= 0 && new_x < game->map.width && new_y >= 0 && new_y < game->map.height
         && (game->map.grid[new_y][new_x] != '1' && game->map.grid[new_y][new_x] != 'E'
             && game->map.grid[new_y][new_x] != 'C'))
