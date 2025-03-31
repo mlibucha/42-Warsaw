@@ -34,8 +34,8 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # Clean up build files
-clean:
+fclean:
 	rm -f $(OBJS) $(TARGET)
 
 # Phony targets (not actual files)
-.PHONY: all clean
+.PHONY: all fclean

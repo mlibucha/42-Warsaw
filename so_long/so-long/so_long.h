@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 18:00:00 by e                 #+#    #+#             */
-/*   Updated: 2025/03/30 13:49:11 by e                ###   ########.fr       */
+/*   Updated: 2025/03/31 13:38:08 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,5 @@ bool	bfs(t_game *game, t_bfs start, t_bfs target);
 int		check_cells(t_game *g, t_bfs player, char type);
 int		borders(t_game *game);
 int		is_valid_map_chars(t_game *game);
+void	*ft_memset(void *s, int c, size_t n);
 #endif

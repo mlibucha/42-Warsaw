@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:22:33 by mlibucha          #+#    #+#             */
-/*   Updated: 2025/03/30 13:43:45 by e                ###   ########.fr       */
+/*   Updated: 2025/03/31 13:39:52 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,29 +88,27 @@ int	hook_all(t_game game)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	t_game	game;
+	t_game game;
 
+	ft_memset(&game, 0, sizeof(t_game));
 	game.steps = 0;
 	if (argc != 2)
 	{
-		printf("Error: Invalid number of arguments.\n");
-		return (1);
+		printf("Error: Invalid number of arguments\n");
+		return (EXIT_FAILURE);
 	}
-	game.mlx = mlx_init();
-	game.wall_texture = NULL;
-	game.floor_texture = NULL;
-	game.player_texture = NULL;
-	game.exit_texture = NULL;
-	game.cole_texture = NULL;
-	game.enemy_texture = NULL;
-	game.win = NULL;
-	if (!game.mlx)
-		return (1);
 	if (!parse_map(argv[1], &game.map, &game))
-		return (cleanup(&game), 1);
+		return (EXIT_FAILURE);
+	game.mlx = mlx_init();
+	if (!game.mlx)
+	{
+		cleanup(&game);
+		return (EXIT_FAILURE);
+	}
 	find_player(&game);
 	hook_all(game);
-	return (0);
+	return (EXIT_SUCCESS);
 }
+

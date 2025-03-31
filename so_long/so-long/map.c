@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:47:55 by mlibucha          #+#    #+#             */
-/*   Updated: 2025/03/28 12:21:16 by e                ###   ########.fr       */
+/*   Updated: 2025/03/31 13:39:05 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,11 @@ int	parse_map(const char *filename, t_map *map, t_game *game)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (0);
+	{
+		write(1, "error\n", 6);
+		cleanup(game);
+		exit (1);
+	}
 	map->height = count_lines(fd, map);
 	close(fd);
 	fd = open(filename, O_RDONLY);

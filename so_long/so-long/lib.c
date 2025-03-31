@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 10:56:09 by e                 #+#    #+#             */
-/*   Updated: 2025/03/10 10:57:12 by e                ###   ########.fr       */
+/*   Updated: 2025/03/31 13:35:09 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,16 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		*c++ = *s2++;
 	*c = '\0';
 	return (start);
+}
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	unsigned char	*ptr;
+
+	ptr = (unsigned char *)s;
+	while (n--)
+	{
+		*ptr++ = (unsigned char)c;
+	}
+	return (s);
 }
