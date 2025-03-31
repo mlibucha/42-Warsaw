@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 18:00:00 by e                 #+#    #+#             */
-/*   Updated: 2025/03/11 20:31:45 by e                ###   ########.fr       */
+/*   Updated: 2025/03/30 13:49:11 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,9 @@ typedef struct s_bfs
 	int		rear;
 	int		dy[4];
 	int		dx[4];
+	int		y;
+	int		x;
 }	t_bfs;
-
-typedef struct s_texture_resize
-{
-	char	*old_data;
-	char	*new_data;
-	int		bpp;
-	int		size_line;
-	int		endian;
-}	t_texture_resize;
 
 typedef struct s_size
 {
@@ -95,15 +88,13 @@ void	move_left(t_game *game);
 void	move_right(t_game *game);
 int		handle_keypress(int keycode, t_game *game);
 
-//map_ut.c
-int	count_lines(int fd, t_map *map);
-int	read_map(int fd, t_map *map, t_game *game);
-
+int		count_lines(int fd, t_map *map);
+int		read_map(int fd, t_map *map, t_game *game);
 void	calculate_tile_size(t_game *game);
 void	render_map(t_game *game);
 int		parse_map(const char *filename, t_map *map, t_game *game);
 void	load_textures(t_game *game);
-void	cleanup(t_game *game);
+int		cleanup(t_game *game);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *src);
 char	*get_next_line(int fd);
@@ -124,5 +115,10 @@ void	lose(t_game *game);
 
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_itoa(int n);
-
+void	free_bfs_data(t_game *game, t_bfs *bfs);
+void	init_bfs_data(t_game *game, t_bfs *bfs, int y, int x);
+bool	bfs(t_game *game, t_bfs start, t_bfs target);
+int		check_cells(t_game *g, t_bfs player, char type);
+int		borders(t_game *game);
+int		is_valid_map_chars(t_game *game);
 #endif

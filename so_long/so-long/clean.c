@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:36:20 by e                 #+#    #+#             */
-/*   Updated: 2025/03/10 20:25:13 by mlibucha         ###   ########.fr       */
+/*   Updated: 2025/03/30 13:38:05 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	mlx_destroy_all(t_game *game)
 	return ;
 }
 
-void	cleanup(t_game *game)
+int	cleanup(t_game *game)
 {
 	int	i;
 
@@ -43,14 +43,15 @@ void	cleanup(t_game *game)
 		}
 		free(game->map.grid);
 	}
-	mlx_destroy_all(game);
-	if (game->win)
-		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
 	{
+		mlx_destroy_all(game);
+		if (game->win)
+			mlx_destroy_window(game->mlx, game->win);
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 	}
+	exit (0);
 }
 
 char	*ft_strdup(const char *src)

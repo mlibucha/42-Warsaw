@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:29:09 by e                 #+#    #+#             */
-/*   Updated: 2025/03/11 17:16:38 by e                ###   ########.fr       */
+/*   Updated: 2025/03/30 12:57:54 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	move_up(t_game *game)
 			if (game->collected == game->collectibles)
 			{
 				position_y(game, new_y);
+				printf("\033[32m""YOU WIN\n");
 				cleanup(game);
 				exit(0);
 			}
@@ -57,6 +58,7 @@ void	move_down(t_game *game)
 			if (game->collected == game->collectibles)
 			{
 				position_y(game, new_y);
+				printf("\033[32m""YOU WIN\n");
 				cleanup(game);
 				exit(0);
 			}
@@ -85,6 +87,7 @@ void	move_left(t_game *game)
 			if (game->collected == game->collectibles)
 			{
 				position_y(game, new_x);
+				printf("\033[32m""YOU WIN\n");
 				cleanup(game);
 				exit(0);
 			}
@@ -113,6 +116,7 @@ void	move_right(t_game *game)
 			if (game->collected == game->collectibles)
 			{
 				position_y(game, new_x);
+				printf("\033[32m""YOU WIN\n");
 				cleanup(game);
 				exit(0);
 			}

@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:22:33 by mlibucha          #+#    #+#             */
-/*   Updated: 2025/03/11 20:33:11 by e                ###   ########.fr       */
+/*   Updated: 2025/03/30 13:43:45 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,15 @@ int	game_loop(t_game *game)
 
 int	hook_all(t_game game)
 {
+	if (!is_map_solvable(&game))
+	{
+		write(1, "Error: The map is not solvable!\n", 32);
+		cleanup(&game);
+		exit (0);
+	}
 	calculate_tile_size(&game);
+	is_valid_map_chars(&game);
+	borders(&game);
 	game.win = mlx_new_window(game.mlx, game.window_width,
 			game.window_height, "so_long");
 	if (!game.win)
@@ -74,6 +82,7 @@ int	hook_all(t_game game)
 	colectibles(&game);
 	mlx_loop_hook(game.mlx, game_loop, &game);
 	mlx_hook(game.win, 2, 1L << 0, handle_keypress, &game);
+	mlx_hook(game.win, 17, 0, cleanup, &game);
 	mlx_loop(game.mlx);
 	cleanup(&game);
 	return (0);
@@ -90,17 +99,18 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	game.mlx = mlx_init();
+	game.wall_texture = NULL;
+	game.floor_texture = NULL;
+	game.player_texture = NULL;
+	game.exit_texture = NULL;
+	game.cole_texture = NULL;
+	game.enemy_texture = NULL;
+	game.win = NULL;
 	if (!game.mlx)
 		return (1);
 	if (!parse_map(argv[1], &game.map, &game))
 		return (cleanup(&game), 1);
 	find_player(&game);
-	if (!is_map_solvable(&game))
-	{
-		printf("Error: The map is not solvable!\n");
-		cleanup(&game);
-		return (1);
-	}
 	hook_all(game);
 	return (0);
 }

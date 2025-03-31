@@ -6,12 +6,13 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 19:13:59 by mlibucha          #+#    #+#             */
-/*   Updated: 2025/02/07 15:04:41 by e                ###   ########.fr       */
+/*   Updated: 2025/03/28 13:01:49 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 #include "so_long.h"
+
 int	found_newline(t_list *list)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:26:08 by mlibucha          #+#    #+#             */
-/*   Updated: 2025/03/11 17:37:57 by e                ###   ########.fr       */
+/*   Updated: 2025/03/30 14:17:14 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,36 +42,50 @@ void	init_enemy(t_game *game)
 	find_enemy_position(game);
 }
 
-void	update_enemy(t_game *game)
+static int	get_random_direction(t_game *game, int *new_x, int *new_y)
 {
-	static int	frame_counter = 0;
-	int			new_x;
-	int			new_y;
 	static int	seeded = 0;
 	int			direction;
 
-	new_x = game->enemy_x;
-	new_y = game->enemy_y;
-	direction = rand() % 4;
-	if (frame_counter++ % 30 != 0)
-		return ;
 	if (!seeded)
 	{
 		srand(time(NULL));
 		seeded = 1;
 	}
+	*new_x = game->enemy_x;
+	*new_y = game->enemy_y;
+	direction = rand() % 4;
 	if (direction == 0)
-		new_y--;
+		(*new_y)--;
 	else if (direction == 1)
-		new_y++;
+		(*new_y)++;
 	else if (direction == 2)
-		new_x--;
+		(*new_x)--;
 	else if (direction == 3)
-		new_x++;
-	if (new_x >= 0 && new_x < game->map.width && new_y >= 0
-		&& new_y < game->map.height && (game->map.grid[new_y][new_x] != '1'
+		(*new_x)++;
+	return (direction);
+}
+
+void	update_enemy(t_game *game)
+{
+	static int	frame_counter = 0;
+	int			new_x;
+	int			new_y;
+
+	if (frame_counter++ % 30 != 0)
+		return ;
+	get_random_direction(game, &new_x, &new_y);
+	if (game->enemy_x == game->player_x && game->enemy_y == game->player_y)
+	{
+		printf("\033[31m""YOU LOSE\n");
+		cleanup(game);
+		exit(0);
+	}
+	if (new_x >= 0 && new_x < game->map.width
+		&& new_y >= 0 && new_y < game->map.height
+		&& game->map.grid[new_y][new_x] != '1'
 		&& game->map.grid[new_y][new_x] != 'E'
-			&& game->map.grid[new_y][new_x] != 'C'))
+		&& game->map.grid[new_y][new_x] != 'C')
 	{
 		game->map.grid[game->enemy_y][game->enemy_x] = '0';
 		game->enemy_x = new_x;
