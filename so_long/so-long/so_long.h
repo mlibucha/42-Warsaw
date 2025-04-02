@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 18:00:00 by e                 #+#    #+#             */
-/*   Updated: 2025/03/31 13:38:08 by e                ###   ########.fr       */
+/*   Updated: 2025/03/31 17:46:18 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_game
 	int		enemy_y;
 	int		enemy_speed;
 	int		enemy_direction;
+	bool	enemy;
 	void	*enemy_texture;
 }	t_game;
 

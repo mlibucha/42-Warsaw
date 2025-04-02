@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:22:33 by mlibucha          #+#    #+#             */
-/*   Updated: 2025/03/31 13:39:52 by e                ###   ########.fr       */
+/*   Updated: 2025/03/31 18:23:03 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ int	hook_all(t_game game)
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_game game;
+	t_game	game;
 
 	ft_memset(&game, 0, sizeof(t_game));
 	game.steps = 0;
@@ -111,4 +111,3 @@ int main(int argc, char **argv)
 	hook_all(game);
 	return (EXIT_SUCCESS);
 }
-

@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:26:08 by mlibucha          #+#    #+#             */
-/*   Updated: 2025/03/30 14:17:14 by e                ###   ########.fr       */
+/*   Updated: 2025/03/31 18:22:33 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	find_enemy_position(t_game *game)
 		{
 			game->enemy_x = x;
 			game->enemy_y = y;
+			game->enemy = true;
 			return ;
 		}
 		i++;
@@ -96,6 +97,9 @@ void	update_enemy(t_game *game)
 
 void	render_enemy(t_game *game)
 {
-	mlx_put_image_to_window(game->mlx, game->win, game->enemy_texture,
-		game->enemy_x * game->tile_size, game->enemy_y * game->tile_size);
+	if (game->enemy)
+	{
+		mlx_put_image_to_window(game->mlx, game->win, game->enemy_texture,
+			game->enemy_x * game->tile_size, game->enemy_y * game->tile_size);
+	}
 }

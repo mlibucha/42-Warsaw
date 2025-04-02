@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:36:20 by e                 #+#    #+#             */
-/*   Updated: 2025/03/30 13:38:05 by e                ###   ########.fr       */
+/*   Updated: 2025/03/31 18:20:18 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	cleanup(t_game *game)
 			mlx_destroy_window(game->mlx, game->win);
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
+		game->enemy = false;
 	}
 	exit (0);
 }
@@ -81,10 +82,3 @@ size_t	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
-
-// void lose(t_game game)
-// {
-// 	mlx_string_put(game.mlx, game.win, 100, 100, 0xFFFFFF, "YOU LOSEE");
-// 	cleanup(&game);
-// 	exit(0);
-// }
