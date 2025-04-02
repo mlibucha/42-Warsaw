@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 18:00:00 by e                 #+#    #+#             */
-/*   Updated: 2025/03/31 17:46:18 by e                ###   ########.fr       */
+/*   Updated: 2025/04/02 18:30:15 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdbool.h>
 # include <stdlib.h>
 # include <time.h>
+# include "print-f/ft_printf.h"
 
 typedef struct s_map
 {
@@ -123,4 +124,5 @@ int		check_cells(t_game *g, t_bfs player, char type);
 int		borders(t_game *game);
 int		is_valid_map_chars(t_game *game);
 void	*ft_memset(void *s, int c, size_t n);
+int		is_valid_filename(char *filename, t_game *game);
 #endif

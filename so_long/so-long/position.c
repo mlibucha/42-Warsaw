@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 22:07:44 by e                 #+#    #+#             */
-/*   Updated: 2025/03/30 14:26:15 by e                ###   ########.fr       */
+/*   Updated: 2025/04/02 19:57:50 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	position_x(t_game *game, int x)
 	game->player_x = new_x;
 	game->map.grid[game->player_y][game->player_x] = 'P';
 	game->steps++;
-	printf("number of steps %d\n", game->steps);
+	ft_printf("number of steps %d\n", game->steps);
 	if (game->enemy_x == game->player_x && game->enemy_y == game->player_y)
 	{
-		printf("\033[31m""YOU LOSE\n");
+		ft_printf("\033[31m""YOU LOSE\n");
 		cleanup(game);
 		exit(0);
 	}
@@ -40,10 +40,10 @@ void	position_y(t_game *game, int y)
 	game->player_y = new_y;
 	game->map.grid[game->player_y][game->player_x] = 'P';
 	game->steps++;
-	printf("number of steps %d\n", game->steps);
+	ft_printf("number of steps %d\n", game->steps);
 	if (game->enemy_x == game->player_x && game->enemy_y == game->player_y)
 	{
-		printf("\033[31m""YOU LOSE\n");
+		ft_printf("\033[31m""YOU LOSE\n");
 		cleanup(game);
 		exit(0);
 	}
@@ -60,7 +60,7 @@ void	while_y(t_game *game)
 		if (game->map.grid[y][0] != '1' ||
 			game->map.grid[y][game->map.width - 1] != '1')
 		{
-			write(1, "Error: Invalid left/right border\n", 32);
+			write(2, "Error:\nInvalid left/right border\n", 32);
 			cleanup(game);
 			exit(1);
 		}
@@ -79,7 +79,7 @@ int	borders(t_game *game)
 		if (game->map.grid[0][x] != '1' ||
 			game->map.grid[game->map.height - 1][x] != '1')
 		{
-			write(1, "Error: Invalid top/bottom border\n", 32);
+			write(2, "Error:\nInvalid top/bottom border\n", 32);
 			cleanup(game);
 			exit(1);
 		}
@@ -105,7 +105,7 @@ int	is_valid_map_chars(t_game *game)
 			if (!(c == '0' || c == '1' || c == 'E'
 					|| c == 'C' || c == 'P' || c == 'S'))
 			{
-				write(1, "Error: Invalid character in map\n", 31);
+				write(2, "Error:\nInvalid character in map\n", 31);
 				cleanup(game);
 				exit(1);
 			}

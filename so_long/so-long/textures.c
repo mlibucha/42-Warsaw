@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 19:50:45 by mlibucha          #+#    #+#             */
-/*   Updated: 2025/03/28 12:40:07 by e                ###   ########.fr       */
+/*   Updated: 2025/04/02 19:57:54 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	load_single_texture(t_game *game, void **texture, char *path)
 			&sizes.old_width, &sizes.old_height);
 	if (!*texture)
 	{
-		printf("Error: Failed to load texture %s.\n", path);
+		ft_printf("Error:\nFailed to load texture %s.\n", path);
 		cleanup(game);
 		exit(1);
 	}

@@ -14,7 +14,7 @@ LIGHT_CYAN="\033[96m"
 
 logging(){
 	local type=$1; shift
-	printf "${LIGHT_CYAN}${BOLD}run_tests${RESET} [%b] : %b\n" "$type" "$*"
+	ft_printf "${LIGHT_CYAN}${BOLD}run_tests${RESET} [%b] : %b\n" "$type" "$*"
 }
 log_info(){
 	logging "${LIGHT_GREEN}info${RESET}" "$@"

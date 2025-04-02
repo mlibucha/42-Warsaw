@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:26:08 by mlibucha          #+#    #+#             */
-/*   Updated: 2025/03/31 18:22:33 by e                ###   ########.fr       */
+/*   Updated: 2025/04/02 13:39:52 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	update_enemy(t_game *game)
 	get_random_direction(game, &new_x, &new_y);
 	if (game->enemy_x == game->player_x && game->enemy_y == game->player_y)
 	{
-		printf("\033[31m""YOU LOSE\n");
+		ft_printf("\033[31m""YOU LOSE\n");
 		cleanup(game);
 		exit(0);
 	}

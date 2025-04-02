@@ -31,13 +31,13 @@ $(NAME): $(OBJ)
 	$(CC) -o $(NAME) $(OBJ) $(LFLAGS)
 
 show:
-	@printf "UNAME		: $(UNAME)\n"
-	@printf "NAME  		: $(NAME)\n"
-	@printf "CC		: $(CC)\n"
-	@printf "CFLAGS		: $(CFLAGS)\n"
-	@printf "LFLAGS		: $(LFLAGS)\n"
-	@printf "SRC		:\n	$(SRC)\n"
-	@printf "OBJ		:\n	$(OBJ)\n"
+	@ft_printf "UNAME		: $(UNAME)\n"
+	@ft_printf "NAME  		: $(NAME)\n"
+	@ft_printf "CC		: $(CC)\n"
+	@ft_printf "CFLAGS		: $(CFLAGS)\n"
+	@ft_printf "LFLAGS		: $(LFLAGS)\n"
+	@ft_printf "SRC		:\n	$(SRC)\n"
+	@ft_printf "OBJ		:\n	$(OBJ)\n"
 
 clean:
 	rm -f $(NAME) $(OBJ) *~ core *.core

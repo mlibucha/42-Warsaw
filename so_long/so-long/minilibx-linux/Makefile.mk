@@ -53,12 +53,12 @@ check: all
 	@test/run_tests.sh
 
 show:
-	@printf "NAME  		: $(NAME)\n"
-	@printf "NAME_UNAME	: $(NAME_UNAME)\n"
-	@printf "CC		: $(CC)\n"
-	@printf "CFLAGS		: $(CFLAGS)\n"
-	@printf "SRC		:\n	$(SRC)\n"
-	@printf "OBJ		:\n	$(OBJ)\n"
+	@ft_printf "NAME  		: $(NAME)\n"
+	@ft_printf "NAME_UNAME	: $(NAME_UNAME)\n"
+	@ft_printf "CC		: $(CC)\n"
+	@ft_printf "CFLAGS		: $(CFLAGS)\n"
+	@ft_printf "SRC		:\n	$(SRC)\n"
+	@ft_printf "OBJ		:\n	$(OBJ)\n"
 
 clean	:
 	rm -rf $(OBJ_DIR)/ $(NAME) $(NAME_UNAME) *~ core *.core

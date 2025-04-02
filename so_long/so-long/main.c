@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:22:33 by mlibucha          #+#    #+#             */
-/*   Updated: 2025/03/31 18:23:03 by e                ###   ########.fr       */
+/*   Updated: 2025/04/02 19:54:13 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	hook_all(t_game game)
 {
 	if (!is_map_solvable(&game))
 	{
-		write(1, "Error: The map is not solvable!\n", 32);
+		write(2, "Error:\n The map is not solvable!\n", 33);
 		cleanup(&game);
 		exit (0);
 	}
@@ -96,18 +96,23 @@ int	main(int argc, char **argv)
 	game.steps = 0;
 	if (argc != 2)
 	{
-		printf("Error: Invalid number of arguments\n");
-		return (EXIT_FAILURE);
+		ft_printf("Error:\n Invalid number of arguments\n");
+		return (1);
+	}
+	if (is_valid_filename(argv[1], &game))
+	{
+		ft_printf("Error:\n Invalid map format\n");
+		return (1);
 	}
 	if (!parse_map(argv[1], &game.map, &game))
-		return (EXIT_FAILURE);
+		return (1);
 	game.mlx = mlx_init();
 	if (!game.mlx)
 	{
 		cleanup(&game);
-		return (EXIT_FAILURE);
+		return (1);
 	}
 	find_player(&game);
 	hook_all(game);
-	return (EXIT_SUCCESS);
+	return (1);
 }

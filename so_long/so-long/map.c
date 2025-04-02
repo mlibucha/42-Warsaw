@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:47:55 by mlibucha          #+#    #+#             */
-/*   Updated: 2025/03/31 13:39:05 by e                ###   ########.fr       */
+/*   Updated: 2025/04/02 19:57:26 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	calculate_tile_size(t_game *game)
 		game->tile_size -= 8;
 		if (game->tile_size < 16)
 		{
-			printf("Error: Map is too large to fit within the window.\n");
+			ft_printf("Error:\nMap is too large to fit within the window.\n");
 			cleanup(game);
 			exit(1);
 		}
@@ -87,7 +87,7 @@ int	parse_map(const char *filename, t_map *map, t_game *game)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
-		write(1, "error\n", 6);
+		write(2, "Error:\nThere is no map named like that\n", 40);
 		cleanup(game);
 		exit (1);
 	}

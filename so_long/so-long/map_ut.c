@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 17:25:55 by e                 #+#    #+#             */
-/*   Updated: 2025/03/28 12:22:13 by e                ###   ########.fr       */
+/*   Updated: 2025/04/02 19:35:13 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,36 @@ int	read_map(int fd, t_map *map, t_game *game)
 		i++;
 	}
 	return (1);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	a;
+
+	a = 0;
+	while ((s1[a] != '\0' || s2[a] != '\0'))
+	{
+		if (s1[a] != s2[a])
+			return ((unsigned char)s1[a] - (unsigned char)s2[a]);
+		a++;
+	}
+	return (0);
+}
+
+int	is_valid_filename(char *filename, t_game *game)
+{
+	size_t	len;
+
+	len = ft_strlen(filename);
+	if (len <= 4)
+	{
+		cleanup(game);
+		exit (0);
+	}
+	if (ft_strcmp(filename + len - 4, ".ber") != 0)
+	{
+		cleanup(game);
+		exit (0);
+	}
+	return (0);
 }
