@@ -47,10 +47,9 @@ $(PRINTF_LIB):
 
 # Clean object files
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(NAME)
 	make clean -C $(PRINTF_DIR)
 	make clean -C $(MLX_DIR)
-	rm -f $(NAME)
 
 # Remove executables and object files
 fclean: clean
