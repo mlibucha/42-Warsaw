@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:22:33 by mlibucha          #+#    #+#             */
-/*   Updated: 2025/04/02 19:54:13 by e                ###   ########.fr       */
+/*   Updated: 2025/04/10 22:34:52 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,16 @@ void	find_player(t_game *game)
 		{
 			game->player_x = x;
 			game->player_y = y;
-			return ;
+			game->amount_p++;
 		}
 		i++;
 	}
+	if(game->amount_p != 1)
+	{
+		printf("ERROR INCORECT AMOUNT OF PLAYERS\n");
+		cleanup(game);
+	}
+	return ;
 }
 
 void	render_text(t_game *game)
