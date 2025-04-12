@@ -79,4 +79,3 @@ void	pa(t_Node **a, t_Node **b, bool print)
 	if (print)
 		ft_printf("pa\n");
 }
-

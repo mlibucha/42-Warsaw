@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 22:34:29 by e                 #+#    #+#             */
-/*   Updated: 2025/01/28 17:03:38 by e                ###   ########.fr       */
+/*   Updated: 2025/02/20 14:37:30 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	*get_next_word(char *s, char c)
 	return (next_word);
 }
 
-static void	free_split(char **strs)
+void	free_split(char **strs)
 {
 	int	i;
 

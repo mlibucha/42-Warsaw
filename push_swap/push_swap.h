@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:36:44 by e                 #+#    #+#             */
-/*   Updated: 2025/01/29 16:23:39 by e                ###   ########.fr       */
+/*   Updated: 2025/03/06 17:27:11 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,5 @@ void	free_stack(t_Node **stack);
 char	**ft_split(char *s, char c);
 long	ft_atol(const char *c);
 void	print_stack(t_Node *stack, const char *name);
-
+void	free_split(char **strs);
 #endif

@@ -6,24 +6,33 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:36:26 by e                 #+#    #+#             */
-/*   Updated: 2025/01/29 01:12:25 by e                ###   ########.fr       */
+/*   Updated: 2025/02/20 16:47:11 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+char	**parse_args(int argc, char **argv)
+{
+	if (argc == 2)
+		return (ft_split(argv[1], ' '));
+	return (argv + 1);
+}
+
 int	main(int argc, char **argv)
 {
+	char	**args;
 	t_Node	*a;
 	t_Node	*b;
 
 	a = NULL;
 	b = NULL;
-	if (argc == 1 || (argc == 2 && !argv[1][0]))
+	if (argc < 2 || (argc == 2 && !argv[1][0]))
 		return (1);
-	else if (argc == 2)
-		argv = ft_split(argv[1], ' ');
-	init_stack_a(&a, argv + 1);
+	args = parse_args(argc, argv);
+	init_stack_a(&a, args);
+	if (argc == 2)
+		free_split(args);
 	if (!stack_sorted(a))
 	{
 		if (stack_len(a) == 2)
@@ -33,7 +42,7 @@ int	main(int argc, char **argv)
 		else
 			sort_stack(&a, &b);
 	}
-	print_stack(a, "stack a after sorting");
+	print_stack(a, "stack after sorting a");
 	free_stack(&a);
 	return (0);
 }
