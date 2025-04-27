@@ -1,0 +1,29 @@
+NAME = push_swap
+
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+LIBFT = libft/libft.a
+
+SRCS = $(wildcard *.c) # add all your .c files here
+OBJS = $(SRCS:.c=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	@make -C libft
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	@make clean -C libft
+	rm -f $(OBJS)
+
+fclean: clean
+	@make fclean -C libft
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
