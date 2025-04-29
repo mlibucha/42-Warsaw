@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 19:36:49 by e                 #+#    #+#             */
-/*   Updated: 2025/03/31 21:05:25 by e                ###   ########.fr       */
+/*   Updated: 2025/04/05 16:16:17 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_status(t_philo *philo, char *message, char *color)
 	{
 		pthread_mutex_lock(&philo->data->print_mutex);
 		printf("%lld %s%d %s\n" RESET, 
-			   get_timestamp_ms(), color, philo->id, message);
+			get_timestamp_ms(philo->data), color, philo->id, message);
 		pthread_mutex_unlock(&philo->data->print_mutex);
 	}
 	pthread_mutex_unlock(&philo->data->death_mutex);
@@ -35,7 +35,7 @@ void	print_death(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->print_mutex);
 	printf("%lld " RED "%d died\n" RESET, 
-		   get_timestamp_ms(), philo->id);
+		get_timestamp_ms(philo->data), philo->id);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
@@ -43,7 +43,7 @@ void	print_all_full(t_data *data)
 {
 	pthread_mutex_lock(&data->print_mutex);
 	printf("%lld " GREEN "All philosophers have eaten enough\n" RESET, 
-		   get_timestamp_ms());
+		get_timestamp_ms(data));
 	pthread_mutex_unlock(&data->print_mutex);
 	pthread_mutex_lock(&data->death_mutex);
 	data->someone_died = true;

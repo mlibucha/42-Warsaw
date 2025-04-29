@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:54:52 by e                 #+#    #+#             */
-/*   Updated: 2025/03/31 20:21:49 by e                ###   ########.fr       */
+/*   Updated: 2025/04/03 17:56:11 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 {
 	t_data data;
 
-	init_timer();
+	init_timer(&data);
 	if (init_data(&data, argc, argv) != 0)
 		return 1;
 	if (create_threads(&data) != 0)

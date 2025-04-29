@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:07:21 by e                 #+#    #+#             */
-/*   Updated: 2025/03/31 20:24:31 by e                ###   ########.fr       */
+/*   Updated: 2025/04/05 16:16:41 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ bool check_death(t_philo *philo)
 int check_philosopher_death(t_data *data, int i)
 {
 	long long time_since_last_meal;
+	long long current_time;
 
 	pthread_mutex_lock(&data->philos[i].meal_mutex);
-	time_since_last_meal = get_timestamp_ms() - data->philos[i].last_meal_time;
+	current_time = get_timestamp_ms(data);
+	time_since_last_meal = current_time - data->philos[i].last_meal_time;
 	if (time_since_last_meal > data->philos[i].time_to_die)
 	{
 		pthread_mutex_lock(&data->death_mutex);
@@ -45,7 +47,6 @@ int check_philosopher_death(t_data *data, int i)
 	pthread_mutex_unlock(&data->philos[i].meal_mutex);
 	return 0;
 }
-
 int check_all_full(t_data *data)
 {
 	int i;
@@ -84,6 +85,6 @@ void *monitor_routine(void *arg)
 			print_all_full(data);
 			return NULL;
 		}
-		usleep(1000);
+		ft_usleep(data, 1000);
 	}
 }

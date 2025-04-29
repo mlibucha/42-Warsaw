@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:55:03 by e                 #+#    #+#             */
-/*   Updated: 2025/03/31 20:22:04 by e                ###   ########.fr       */
+/*   Updated: 2025/04/03 17:55:55 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	assign_data(t_data *data, int argc, char **argv)
 		data->philos[i].time_to_eat = ft_atoi(argv[3]);
 		data->philos[i].time_to_sleep = ft_atoi(argv[4]);
 		data->philos[i].time_to_die = ft_atoi(argv[2]);
-		data->philos[i].last_meal_time = get_timestamp_ms();
+		data->philos[i].last_meal_time = get_timestamp_ms(data);
 		data->philos[i].meals_eaten = 0;
 		data->philos[i].full = false;
 		data->philos[i].data = data;
@@ -71,7 +71,7 @@ int	create_threads(t_data *data)
 	int i;
 	pthread_t monitor_thread;
 	
-	data->start_time = get_timestamp_ms();
+	data->start_time = get_timestamp_ms(data);
 	if (pthread_create(&monitor_thread, NULL, monitor_routine, data) != 0)
 	{
 		perror(RED "Failed to create monitor thread" RESET);

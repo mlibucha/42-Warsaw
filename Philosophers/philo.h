@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:29:06 by e                 #+#    #+#             */
-/*   Updated: 2025/03/31 21:04:46 by e                ###   ########.fr       */
+/*   Updated: 2025/04/05 16:13:26 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,36 @@
 
 
 typedef struct s_fork {
-    pthread_mutex_t mutex;
-    int             id;
+	pthread_mutex_t mutex;
+	int             id;
 } t_fork;
 
 typedef struct s_philo {
-    int             id;
-    pthread_t       thread;
-    t_fork          *left_fork;
-    t_fork          *right_fork;
-    long long       time_to_die;
-    long long       time_to_eat;
-    long long       time_to_sleep;
-    int             num_meals;
-    int             meals_eaten;
-    long long       last_meal_time;
-    bool            full;
-    pthread_mutex_t meal_mutex;
-    struct s_data   *data;
+	int             id;
+	pthread_t       thread;
+	t_fork          *left_fork;
+	t_fork          *right_fork;
+	long long       time_to_die;
+	long long       time_to_eat;
+	long long       time_to_sleep;
+	int             num_meals;
+	int             meals_eaten;
+	long long       last_meal_time;
+	bool            full;
+	pthread_mutex_t meal_mutex;
+	struct s_data   *data;
 } t_philo;
 
 typedef struct s_data {
-    int             num_philosophers;
-    t_philo         *philos;
-    t_fork          *forks;
-    long long       start_time;
-    bool            someone_died;
-    pthread_mutex_t print_mutex;
-    pthread_mutex_t death_mutex;
+	int             num_philosophers;
+	t_philo         *philos;
+	t_fork          *forks;
+	long long       start_time;
+	bool            someone_died;
+	pthread_mutex_t print_mutex;
+	pthread_mutex_t death_mutex;
+	struct timeval  start_timeval;
+	pthread_mutex_t time_mutex;
 } t_data;
 
 #define RED   "\033[31m"
@@ -66,7 +68,8 @@ int create_threads(t_data *data);
 
 void        *philosopher_routine(void *arg);
 void        *monitor_routine(void *arg);
-long long   get_timestamp_ms(void);
+void        init_timer(t_data *data);
+long long   get_timestamp_ms(t_data *data);
 void        print_status(t_philo *philo, char *message, char *color);
 void        cleanup(t_data *data);
 int         error_msg(char *msg);
@@ -75,5 +78,5 @@ int check_input(int argc, char **argv);
 void print_death(t_philo *philo);
 void print_all_full(t_data *data);
 bool check_death(t_philo *philo);
-void init_timer(void);
+void    ft_usleep(t_data *data, unsigned long long time_to_sleep);
 #endif

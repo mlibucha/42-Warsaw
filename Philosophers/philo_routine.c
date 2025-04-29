@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:12:47 by e                 #+#    #+#             */
-/*   Updated: 2025/03/31 20:52:54 by e                ###   ########.fr       */
+/*   Updated: 2025/04/29 12:11:09 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void update_meal_info(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->meal_mutex);
-	philo->last_meal_time = get_timestamp_ms();
+	philo->last_meal_time = get_timestamp_ms(philo->data);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meal_mutex);
 }
@@ -25,21 +25,21 @@ void eat(t_philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&philo->right_fork->mutex);
-		// print_status(philo, "has taken a right fork", "");
+		// printf("%d has picked right f\n", philo->id);
 		pthread_mutex_lock(&philo->left_fork->mutex);
-		// print_status(philo, "has taken a left fork", "");
+		// printf("%d has picked left f\n", philo->id);
 	}
 	else
 	{
 		pthread_mutex_lock(&philo->left_fork->mutex);
-		// print_status(philo, "has taken a left fork", "");
+		// printf("%d has picked left f\n", philo->id);
 		pthread_mutex_lock(&philo->right_fork->mutex);
-		// print_status(philo, "has taken a right fork", "");
+		// printf("%d has picked right f\n", philo->id);
 	}
 	print_status(philo, "has taken a fork", "");
 	print_status(philo, "is eating", GREEN);
-	update_meal_info(philo);
-	usleep(philo->time_to_eat * 1000);
+	update_meal_info(philo);  // Update meal time right when eating starts
+	ft_usleep(philo->data, philo->time_to_eat * 1000);
 	pthread_mutex_unlock(&philo->left_fork->mutex);
 	pthread_mutex_unlock(&philo->right_fork->mutex);
 }
@@ -57,7 +57,7 @@ void philosopher_cycle(t_philo *philo)
 			break;
 		}
 		print_status(philo, "is sleeping", BLUE);
-		usleep(philo->time_to_sleep * 1000);
+		ft_usleep(philo->data, philo->time_to_sleep * 1000);
 	}
 }
 
@@ -66,7 +66,7 @@ void *philosopher_routine(void *arg)
 	t_philo *philo = (t_philo *)arg;
 	
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		ft_usleep(philo->data, 1000);
 	philosopher_cycle(philo);
 	return NULL;
 }
