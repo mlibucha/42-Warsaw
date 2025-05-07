@@ -6,17 +6,15 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:07:21 by e                 #+#    #+#             */
-/*   Updated: 2025/04/05 16:16:41 by e                ###   ########.fr       */
+/*   Updated: 2025/04/30 14:32:54 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-#include "philo.h"
-
-bool check_death(t_philo *philo)
+bool	check_death(t_philo *philo)
 {
-	bool    someone_died;
+	bool	someone_died;
 
 	pthread_mutex_lock(&philo->data->death_mutex);
 	someone_died = philo->data->someone_died;
@@ -24,10 +22,10 @@ bool check_death(t_philo *philo)
 	return (someone_died);
 }
 
-int check_philosopher_death(t_data *data, int i)
+int	check_philosopher_death(t_data *data, int i)
 {
-	long long time_since_last_meal;
-	long long current_time;
+	long long	time_since_last_meal;
+	long long	current_time;
 
 	pthread_mutex_lock(&data->philos[i].meal_mutex);
 	current_time = get_timestamp_ms(data);
@@ -42,23 +40,24 @@ int check_philosopher_death(t_data *data, int i)
 		}
 		pthread_mutex_unlock(&data->death_mutex);
 		pthread_mutex_unlock(&data->philos[i].meal_mutex);
-		return 1;
+		return (1);
 	}
 	pthread_mutex_unlock(&data->philos[i].meal_mutex);
-	return 0;
+	return (0);
 }
-int check_all_full(t_data *data)
+
+int	check_all_full(t_data *data)
 {
-	int i;
-	int all_full;
+	int	i;
+	int	all_full;
 
 	all_full = 1;
 	i = 0;
 	while (i < data->num_philosophers)
 	{
 		pthread_mutex_lock(&data->philos[i].meal_mutex);
-		if (data->philos[i].num_meals != -1 && 
-			data->philos[i].meals_eaten < data->philos[i].num_meals)
+		if (data->philos[i].num_meals != -1
+			&& data->philos[i].meals_eaten < data->philos[i].num_meals)
 			all_full = 0;
 		pthread_mutex_unlock(&data->philos[i].meal_mutex);
 		i++;
@@ -66,25 +65,26 @@ int check_all_full(t_data *data)
 	return (all_full);
 }
 
-void *monitor_routine(void *arg)
+void	*monitor_routine(void *arg)
 {
-	t_data *data = (t_data *)arg;
-	int i;
+	t_data	*data;
+	int		i;
 
+	data = (t_data *)arg;
 	while (1)
 	{
 		i = 0;
 		while (i < data->num_philosophers)
 		{
 			if (check_philosopher_death(data, i))
-				return NULL;
+				return (NULL);
 			i++;
 		}
 		if (data->philos[0].num_meals != -1 && check_all_full(data))
 		{
 			print_all_full(data);
-			return NULL;
+			return (NULL);
 		}
-		ft_usleep(data, 1000);
+		ft_usleep(data, 100);
 	}
 }

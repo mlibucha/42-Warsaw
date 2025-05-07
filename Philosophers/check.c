@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:42:48 by e                 #+#    #+#             */
-/*   Updated: 2025/03/23 14:48:21 by e                ###   ########.fr       */
+/*   Updated: 2025/04/30 13:34:21 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,31 @@ int	ft_atoi(const char *c)
 	return (res * si);
 }
 
-int is_positive_integer(const char *str)
+int	is_positive_integer(const char *str)
 {
+	int	a;
+
 	if (str == NULL || *str == '\0')
-		return 1;
-	int a = ft_atoi(str);
-	if(a <= 0)
+		return (1);
+	a = ft_atoi(str);
+	if (a <= 0)
 		return (1);
 	return (0);
 }
 
-int check_input(int argc, char **argv)
+int	check_input(int argc, char **argv)
 {
-	int i;
+	int	i;
 
-	i= 1;
+	i = 1;
 	while (i < argc)
 	{
 		if (is_positive_integer(argv[i]))
 		{
 			printf("Error: Argument %d must be a positive integer.\n", i);
-			return 1;
+			return (1);
 		}
 		i++;
 	}
-	return 0;
+	return (0);
 }

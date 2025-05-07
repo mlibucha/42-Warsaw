@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:55:03 by e                 #+#    #+#             */
-/*   Updated: 2025/04/03 17:55:55 by e                ###   ########.fr       */
+/*   Updated: 2025/04/30 14:29:31 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	assign_data(t_data *data, int argc, char **argv)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (i < data->num_philosophers)
 	{
 		data->philos[i].id = i + 1;
@@ -41,41 +43,43 @@ void	assign_data(t_data *data, int argc, char **argv)
 
 int	init_data(t_data *data, int argc, char **argv)
 {
+	int	i;
+
 	if (argc < 5 || argc > 6)
 	{
 		printf(RED "Incorrect amount of arguments\n");
-		return 1;
+		return (1);
 	}
 	if (check_input(argc, argv) != 0)
-		return 1;
+		return (1);
 	data->num_philosophers = ft_atoi(argv[1]);
 	data->philos = malloc(sizeof(t_philo) * data->num_philosophers);
 	data->forks = malloc(sizeof(t_fork) * data->num_philosophers);
 	if (!data->philos || !data->forks)
 	{
 		printf(RED "Error: Memory allocation failed.\n");
-		return 1;
+		return (1);
 	}
-	int i = 0;
+	i = 0;
 	while (i < data->num_philosophers)
 	{
 		pthread_mutex_init(&data->forks[i].mutex, NULL);
 		i++;
 	}
 	assign_data(data, argc, argv);
-	return 0;
+	return (0);
 }
 
 int	create_threads(t_data *data)
 {
-	int i;
-	pthread_t monitor_thread;
-	
+	int			i;
+	pthread_t	monitor_thread;
+
 	data->start_time = get_timestamp_ms(data);
 	if (pthread_create(&monitor_thread, NULL, monitor_routine, data) != 0)
 	{
 		perror(RED "Failed to create monitor thread" RESET);
-		return 1;
+		return (1);
 	}
 	i = 0;
 	while (i < data->num_philosophers)
@@ -83,7 +87,7 @@ int	create_threads(t_data *data)
 		if (pthread_create(&data->philos[i].thread, NULL, philosopher_routine, &data->philos[i]) != 0)
 		{
 			perror(RED "Failed to create thread" RESET);
-			return 1;
+			return (1);
 		}
 		i++;
 	}
@@ -94,5 +98,5 @@ int	create_threads(t_data *data)
 		pthread_join(data->philos[i].thread, NULL);
 		i++;
 	}
-	return 0;
+	return (0);
 }

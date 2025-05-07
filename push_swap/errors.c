@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:36:12 by e                 #+#    #+#             */
-/*   Updated: 2025/01/29 16:04:50 by e                ###   ########.fr       */
+/*   Updated: 2025/05/03 13:23:20 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ void	free_stack(t_Node **stack)
 void	free_errors(t_Node **a)
 {
 	free_stack(a);
-	ft_printf("Error\n");
+	write(2, "Error\n", 6);
 	exit(1);
 }

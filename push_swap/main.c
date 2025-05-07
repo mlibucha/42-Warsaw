@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:36:26 by e                 #+#    #+#             */
-/*   Updated: 2025/02/20 16:47:11 by e                ###   ########.fr       */
+/*   Updated: 2025/05/03 13:24:20 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 	a = NULL;
 	b = NULL;
 	if (argc < 2 || (argc == 2 && !argv[1][0]))
-		return (1);
+		return (write(2, "error\n", 6), 1);
 	args = parse_args(argc, argv);
 	init_stack_a(&a, args);
 	if (argc == 2)

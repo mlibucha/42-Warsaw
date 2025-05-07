@@ -6,22 +6,23 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:54:52 by e                 #+#    #+#             */
-/*   Updated: 2025/04/03 17:56:11 by e                ###   ########.fr       */
+/*   Updated: 2025/04/30 14:33:22 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_data data;
+	t_data	data;
+	int		i;
 
 	init_timer(&data);
 	if (init_data(&data, argc, argv) != 0)
-		return 1;
+		return (1);
 	if (create_threads(&data) != 0)
-		return 1;
-	int i = 0;
+		return (1);
+	i = 0;
 	while (i < data.num_philosophers)
 	{
 		pthread_mutex_destroy(&data.forks[i].mutex);
@@ -29,6 +30,5 @@ int main(int argc, char **argv)
 	}
 	free(data.philos);
 	free(data.forks);
-	return 0;
+	return (0);
 }
-

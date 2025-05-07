@@ -6,13 +6,13 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:12:47 by e                 #+#    #+#             */
-/*   Updated: 2025/04/29 12:11:09 by e                ###   ########.fr       */
+/*   Updated: 2025/04/30 14:38:02 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void update_meal_info(t_philo *philo)
+void	update_meal_info(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->last_meal_time = get_timestamp_ms(philo->data);
@@ -20,53 +20,52 @@ void update_meal_info(t_philo *philo)
 	pthread_mutex_unlock(&philo->meal_mutex);
 }
 
-void eat(t_philo *philo)
+void	eat(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&philo->right_fork->mutex);
-		// printf("%d has picked right f\n", philo->id);
 		pthread_mutex_lock(&philo->left_fork->mutex);
-		// printf("%d has picked left f\n", philo->id);
 	}
 	else
 	{
 		pthread_mutex_lock(&philo->left_fork->mutex);
-		// printf("%d has picked left f\n", philo->id);
 		pthread_mutex_lock(&philo->right_fork->mutex);
-		// printf("%d has picked right f\n", philo->id);
 	}
 	print_status(philo, "has taken a fork", "");
 	print_status(philo, "is eating", GREEN);
-	update_meal_info(philo);  // Update meal time right when eating starts
+	update_meal_info(philo);
 	ft_usleep(philo->data, philo->time_to_eat * 1000);
 	pthread_mutex_unlock(&philo->left_fork->mutex);
 	pthread_mutex_unlock(&philo->right_fork->mutex);
 }
 
-void philosopher_cycle(t_philo *philo)
+void	philosopher_cycle(t_philo *philo)
 {
 	while (!check_death(philo))
 	{
 		print_status(philo, "is thinking", "");
+		if (philo->id % 2 == 0)
+			ft_usleep(philo->data, 500);
 		eat(philo);
-		if (philo->num_meals != -1 && 
-			philo->meals_eaten >= philo->num_meals)
+		if (philo->num_meals != -1
+			&& philo->meals_eaten >= philo->num_meals)
 		{
 			philo->full = true;
-			break;
+			break ;
 		}
 		print_status(philo, "is sleeping", BLUE);
 		ft_usleep(philo->data, philo->time_to_sleep * 1000);
 	}
 }
 
-void *philosopher_routine(void *arg)
+void	*philosopher_routine(void *arg)
 {
-	t_philo *philo = (t_philo *)arg;
-	
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->data, 1000);
 	philosopher_cycle(philo);
-	return NULL;
+	return (NULL);
 }
