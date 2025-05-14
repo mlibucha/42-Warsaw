@@ -6,9 +6,10 @@ int ft_isnumber(char *str)
 	while (str[a])
 	{
 		if(str[a] < '0' || str[a] > '9')
-			return 1;
+			return 0;
+		a++;
 	}
-	return 0;
+	return 1;
 }
 
 int	mini_exit(t_mini *mini, t_cmd *cmd)
@@ -47,7 +48,7 @@ int	mini_cd(t_mini *mini, t_cmd *cmd)
 		return (1);
 	}
 	if (cmd->argc == 1)
-		path = getenv("HOME");
+		path = get_value(&mini->env_list, "HOME");
 	else
 		path = cmd->args[1];
 	if (chdir(path) != 0)

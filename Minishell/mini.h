@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/12 20:03:37 by e                 #+#    #+#             */
+/*   Updated: 2025/05/13 11:04:28 by e                ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINI_H
 # define MINI_H
 
@@ -26,7 +38,15 @@ typedef struct s_cmd
 	char	*input;
 	char	*output;
 	int		append;
+	int		pipe_out;
 }	t_cmd;
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_mini
 {
@@ -38,7 +58,9 @@ typedef struct s_mini
 	int		status;
 	int		last_status;
 	char	*full_path;
+	t_env   *env_list;
 }	t_mini;
+
 
 void	set_values(t_mini *mini, char **envp);
 void	free_values(t_mini *mini);
@@ -50,7 +72,7 @@ int		execute_builtin(t_mini *mini, t_cmd *cmd);
 int		handle_redirections(t_cmd *cmd);
 void	reset_redirections(t_cmd *cmd);
 void	update_path(t_mini *mini);
-char	*find_executable(t_mini *mini, char *cmd);
+char	*find_executable(char *cmd);
 
 int		mini_exit(t_mini *mini, t_cmd *cmd);
 int		mini_cd(t_mini *mini, t_cmd *cmd);
@@ -62,4 +84,12 @@ int		mini_unset(t_mini *mini, t_cmd *cmd);
 
 char	*ft_strtok(char *str, const char *delim);
 
+void	list_del(t_env **lst, char *key);
+void	list_add(t_env **lst, char *key, char *value);
+void	swap_value(t_env **lst, char *key, char *value);
+void	destroy_list(t_env **lst);
+char	*get_value(t_env **lst, char *key);
+
+t_env	*init_envs(char **envp, t_mini *mini);
+void	print_envs(t_env **list);
 #endif

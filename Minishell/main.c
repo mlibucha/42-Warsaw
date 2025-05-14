@@ -14,6 +14,7 @@
 
 int main(int argc, char **argv, char **envp)
 {
+	// t_env	*env;
 	(void)argv;
 	
 	if(argc != 1)
@@ -30,6 +31,8 @@ int main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	set_values(mini, envp);
+	mini->env_list = init_envs(envp, mini);
+	//print_envs(&env);
 	read_input(mini);
 	free_values(mini);
 	free(mini);
