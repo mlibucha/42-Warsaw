@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:42:42 by e                 #+#    #+#             */
-/*   Updated: 2025/04/30 14:39:33 by e                ###   ########.fr       */
+/*   Updated: 2025/06/16 16:42:04 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ void	ft_usleep(t_data *data, unsigned long long time_to_sleep)
 	{
 		pthread_mutex_lock(&data->death_mutex);
 		if (data->someone_died)
-		{
 			pthread_mutex_unlock(&data->death_mutex);
+		if (data->someone_died)
 			break ;
-		}
 		pthread_mutex_unlock(&data->death_mutex);
 		gettimeofday(&current, NULL);
 		elapsed = (current.tv_sec - start.tv_sec) * 1000000

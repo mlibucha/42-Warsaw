@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 19:36:49 by e                 #+#    #+#             */
-/*   Updated: 2025/04/30 13:30:06 by e                ###   ########.fr       */
+/*   Updated: 2025/06/16 17:21:16 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	print_death(t_philo *philo)
 	printf("%lld " RED "%d died\n" RESET,
 		get_timestamp_ms(philo->data), philo->id);
 	pthread_mutex_unlock(&philo->data->print_mutex);
-	cleanup(philo->data);
 }
 
 void	print_all_full(t_data *data)
@@ -56,7 +55,7 @@ void	cleanup(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->num_philosophers)
+	while (i < data->num_phil)
 	{
 		pthread_mutex_destroy(&data->forks[i].mutex);
 		pthread_mutex_destroy(&data->philos[i].meal_mutex);

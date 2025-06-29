@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   zombieHorde.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 17:54:52 by e                 #+#    #+#             */
-/*   Updated: 2025/06/16 17:24:37 by e                ###   ########.fr       */
+/*   Created: 2025/06/29 11:45:41 by e                 #+#    #+#             */
+/*   Updated: 2025/06/29 11:51:43 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "Zombie.hpp"
+#include "Zombie.h"
 
-int	main(int argc, char **argv)
+Zombie* zombieHorde( int N, std::string name )
 {
-	t_data	data;
-
-	init_timer(&data);
-	if (init_data(&data, argc, argv) != 0)
-		return (1);
-	if (create_threads(&data) != 0)
-	{
-		cleanup(&data);
-		return (1);
-	}
-	return (0);
+	
 }

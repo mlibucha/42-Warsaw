@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   Zombie.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 17:54:52 by e                 #+#    #+#             */
-/*   Updated: 2025/06/16 17:24:37 by e                ###   ########.fr       */
+/*   Created: 2025/06/28 15:29:02 by e                 #+#    #+#             */
+/*   Updated: 2025/06/29 11:52:32 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#ifndef ZOMBIE_H
+#define ZOMBIE_H
 
-int	main(int argc, char **argv)
-{
-	t_data	data;
+# include <iostream>
+# include <string>
+# include <iomanip>
+# include <cctype>
+# include <sstream>
+#include "Zombie.hpp"
 
-	init_timer(&data);
-	if (init_data(&data, argc, argv) != 0)
-		return (1);
-	if (create_threads(&data) != 0)
-	{
-		cleanup(&data);
-		return (1);
-	}
-	return (0);
-}
+
+Zombie* newZombie(std::string name);
+void randomChump(std::string name);
+Zombie* zombieHorde( int N, std::string name );
+
+#endif

@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 		{
 			for(int j = 0; argv[i][j] != '\0'; j++)
 			{
-				std::cout <<(toupper(argv[i][j]));
+				std::cout <<((char)toupper(argv[i][j]));
 			}
 			if(i < argc - 1)
 			{

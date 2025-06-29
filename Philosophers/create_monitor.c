@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 13:07:21 by e                 #+#    #+#             */
-/*   Updated: 2025/04/30 14:32:54 by e                ###   ########.fr       */
+/*   Updated: 2025/06/16 16:47:16 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	check_all_full(t_data *data)
 
 	all_full = 1;
 	i = 0;
-	while (i < data->num_philosophers)
+	while (i < data->num_phil)
 	{
 		pthread_mutex_lock(&data->philos[i].meal_mutex);
 		if (data->philos[i].num_meals != -1
@@ -74,7 +74,7 @@ void	*monitor_routine(void *arg)
 	while (1)
 	{
 		i = 0;
-		while (i < data->num_philosophers)
+		while (i < data->num_phil)
 		{
 			if (check_philosopher_death(data, i))
 				return (NULL);
