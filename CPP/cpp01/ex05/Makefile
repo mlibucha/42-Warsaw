@@ -1,13 +1,14 @@
+NAME = harl
+
+SRC = Harl.cpp main.cpp
+OBJ = $(SRC:.cpp=.o)
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
-NAME = ZombieHorde
-SRC =	main.cpp Zombie.cpp zombieHorde.cpp
-OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) $^ -o $@
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@

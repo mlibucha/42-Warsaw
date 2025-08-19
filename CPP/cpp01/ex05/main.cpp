@@ -5,37 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/28 15:23:40 by e                 #+#    #+#             */
-/*   Updated: 2025/07/03 13:30:48 by e                ###   ########.fr       */
+/*   Created: 2025/08/17 13:52:18 by e                 #+#    #+#             */
+/*   Updated: 2025/08/17 14:12:51 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
-#include "Zombie.h"
-#include <cstdlib>
+#include "Harl.hpp"
+#include <iostream>
 
-
-int main(int argc, char **argv)
-{
-	if (argc != 2)
-	{
-		std::cerr << "Usage: " << argv[0] << " <amount>" << std::endl;
-		return 1;
-	}
-	int amount = std::atoi(argv[1]);
-	if (amount <= 0)
-	{
-		std::cerr << "Amount must be a positive integer." << std::endl;
-		return 1;
-	}
-	Zombie* horde = zombieHorde(amount, "HordeZombie");
-	if (!horde)
-	{
-		std::cerr << "Failed to create zombie horde." << std::endl;
-		return 1;
-	}
-	for (int i = 0; i < amount; ++i)
-		horde[i].announce();
-	delete[] horde;
+int main() {
+	Harl harl;
+	
+	std::cout << "DEBUG level:" << std::endl;
+	harl.complain("DEBUG");
+	std::cout << "\nINFO level:" << std::endl;
+	harl.complain("INFO");
+	std::cout << "\nWARNING level:" << std::endl;
+	harl.complain("WARNING");
+	std::cout << "\nERROR level:" << std::endl;
+	harl.complain("ERROR");
+	std::cout << "\nInvalid level:" << std::endl;
+	harl.complain("WHINING");
 	return 0;
 }

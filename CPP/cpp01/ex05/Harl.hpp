@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zombieHorde.cpp                                    :+:      :+:    :+:   */
+/*   Harl.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 11:45:41 by e                 #+#    #+#             */
-/*   Updated: 2025/07/03 13:35:21 by e                ###   ########.fr       */
+/*   Created: 2025/08/17 13:52:55 by e                 #+#    #+#             */
+/*   Updated: 2025/08/17 14:11:22 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
-Zombie::Zombie()
-{
-}
+#ifndef HARL_HPP
+#define HARL_HPP
 
-Zombie* zombieHorde(int N, std::string name)
-{
-    if (N <= 0)
-		return NULL;
-    Zombie* horde = new Zombie[N];
-    for (int i = 0; i < N; ++i) {
-        horde[i].setName(name);
-    }
-    return horde;
-}
+#include <string>
+
+class Harl {
+private:
+	void debug(void);
+	void info(void);
+	void warning(void);
+	void error(void);
+
+	typedef void (Harl::*ComplaintFunction)(void);
+	struct ComplaintLevel {
+		std::string level;
+		ComplaintFunction function;
+	};
+	static ComplaintLevel levels[4];
+public:
+	void complain(std::string level);
+};
+
+#endif

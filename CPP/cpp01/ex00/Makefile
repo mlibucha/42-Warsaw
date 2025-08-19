@@ -1,7 +1,7 @@
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 NAME = Zombie
-SRC =	$(wildcard *.cpp)
+SRC =	newZombie.cpp main.cpp randomChump.cpp Zombie.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)

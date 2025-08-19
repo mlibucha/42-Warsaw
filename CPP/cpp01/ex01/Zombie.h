@@ -6,7 +6,7 @@
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:29:02 by e                 #+#    #+#             */
-/*   Updated: 2025/06/29 11:52:32 by e                ###   ########.fr       */
+/*   Updated: 2025/07/03 12:45:41 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@
 
 Zombie* newZombie(std::string name);
 void randomChump(std::string name);
-Zombie* zombieHorde( int N, std::string name );
+Zombie* zombieHorde(int N, std::string name);
 
 #endif

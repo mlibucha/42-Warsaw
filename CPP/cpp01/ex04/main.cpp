@@ -5,37 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/28 15:23:40 by e                 #+#    #+#             */
-/*   Updated: 2025/07/03 13:30:48 by e                ###   ########.fr       */
+/*   Created: 2025/08/16 14:49:24 by e                 #+#    #+#             */
+/*   Updated: 2025/08/16 16:26:55 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
-#include "Zombie.h"
-#include <cstdlib>
+#include "FileReplacer.hpp"
+#include <iostream>
 
-
-int main(int argc, char **argv)
+int main(int argc, char* argv[])
 {
-	if (argc != 2)
-	{
-		std::cerr << "Usage: " << argv[0] << " <amount>" << std::endl;
-		return 1;
-	}
-	int amount = std::atoi(argv[1]);
-	if (amount <= 0)
-	{
-		std::cerr << "Amount must be a positive integer." << std::endl;
-		return 1;
-	}
-	Zombie* horde = zombieHorde(amount, "HordeZombie");
-	if (!horde)
-	{
-		std::cerr << "Failed to create zombie horde." << std::endl;
-		return 1;
-	}
-	for (int i = 0; i < amount; ++i)
-		horde[i].announce();
-	delete[] horde;
-	return 0;
+    if (argc != 4) {
+        std::cerr << "Usage: " << argv[0] << " <filename> <s1> <s2>" << std::endl;
+        return 1;
+    }
+
+    std::string filename(argv[1]);
+    std::string s1(argv[2]);
+    std::string s2(argv[3]);
+
+    if (!FileReplacer::replaceInFile(filename, s1, s2)) {
+        return 1;
+    }
+
+    std::cout << "Replacement completed successfully. Output in " 
+              << filename << ".replace" << std::endl;
+    return 0;
 }

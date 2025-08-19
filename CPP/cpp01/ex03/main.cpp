@@ -5,37 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/28 15:23:40 by e                 #+#    #+#             */
-/*   Updated: 2025/07/03 13:30:48 by e                ###   ########.fr       */
+/*   Created: 2025/07/03 14:06:13 by e                 #+#    #+#             */
+/*   Updated: 2025/08/16 14:44:40 by e                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
-#include "Zombie.h"
-#include <cstdlib>
+#include "HumanA.hpp"
+#include "HumanB.hpp"
+#include "Weapon.hpp"
 
-
-int main(int argc, char **argv)
-{
-	if (argc != 2)
+int main() {
 	{
-		std::cerr << "Usage: " << argv[0] << " <amount>" << std::endl;
-		return 1;
+		Weapon club = Weapon("crude spiked club");
+		HumanA bob("Bob", club);
+		bob.attack();
+		club.setType("some other type of club");
+		bob.attack();
 	}
-	int amount = std::atoi(argv[1]);
-	if (amount <= 0)
 	{
-		std::cerr << "Amount must be a positive integer." << std::endl;
-		return 1;
+		Weapon club = Weapon("crude spiked club");
+		HumanB jim("Jim");
+		jim.setWeapon(club);
+		jim.attack();
+		club.setType("some other type of club");
+		jim.attack();
 	}
-	Zombie* horde = zombieHorde(amount, "HordeZombie");
-	if (!horde)
-	{
-		std::cerr << "Failed to create zombie horde." << std::endl;
-		return 1;
-	}
-	for (int i = 0; i < amount; ++i)
-		horde[i].announce();
-	delete[] horde;
 	return 0;
 }
