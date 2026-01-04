@@ -5,26 +5,39 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/26 13:12:32 by e                 #+#    #+#             */
-/*   Updated: 2025/12/10 14:06:00 by mlibucha         ###   ########.fr       */
+/*   Created: 2026/01/02 18:18:30 by mlibucha          #+#    #+#             */
+/*   Updated: 2026/01/03 15:06:45 by mlibucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iter.hpp"
-#include <iostream>
-#include <cstddef>
+#include "RPN.hpp"
 
-/* free function (not a lambda) so it works with -std=c++98 */
-static void printInt(int const &v)
+int main(int argc, char **argv)
 {
-	std::cout << v << std::endl;
-}
+	if (argc != 2)
+	{
+		std::cerr << "Error: invalid number of arguments." << std::endl;
+		return 1;
+	}
+	if (argv[1] == NULL || std::string(argv[1]).empty())
+	{
+		std::cerr << "Error: empty expression." << std::endl;
+		return 1;
+	}
 
-int main(void)
-{
-	int arr[4] = {0, 1, 2, 3};
+	RPN rpn;
+	if (!rpn.is_valid_string(std::string(argv[1])))
+	{
+		std::cerr << "Error" << std::endl;
+		return 1;
+	}
 
-	iter(arr, 4, printInt);
+	int result = 0;
+	if (!rpn.evaluateExpression(std::string(argv[1]), result))
+	{
+		return 1;
+	}
 
+	std::cout << result << std::endl;
 	return 0;
 }

@@ -2,6 +2,7 @@
 #include "A.hpp"
 #include "B.hpp"
 #include "C.hpp"
+#include "Identifier.hpp"
 #include <iostream>
 
 void identify(Base* p) {

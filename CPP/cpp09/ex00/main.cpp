@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iter.hpp                                           :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/26 13:12:59 by e                 #+#    #+#             */
-/*   Updated: 2025/12/10 14:05:07 by mlibucha         ###   ########.fr       */
+/*   Created: 2025/12/14 18:24:11 by mlibucha          #+#    #+#             */
+/*   Updated: 2025/12/14 21:01:40 by mlibucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITER_HPP
-#define ITER_HPP
 
-#include <iostream>
+#include  "BitcoinExchange.hpp"
 
 
 
-template <typename T, typename F>
-void iter(T *arr, std::size_t len, F func)
+int main (int argc, char **argv)
 {
-	for (std::size_t i = 0; i < len; i++)
-		func(arr[i]);
-}
+	
 
-#endif
+	if (argc != 2)
+	{
+		std::cerr << "Error: could not open file." << std::endl;
+		return 1;
+	}
+	BitcoinExchange btcExchange;
+
+	btcExchange.loadDataBase("data.csv");
+	btcExchange.processInputFile(argv[1]);
+
+	return 0;
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
+/*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:55:21 by e                 #+#    #+#             */
-/*   Updated: 2025/02/15 17:12:24 by e                ###   ########.fr       */
+/*   Updated: 2025/11/14 19:56:07 by mlibucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	send_bit(pid_t pid, int bit)
 			exit(EXIT_FAILURE);
 		}
 	}
-	usleep(50);
+	usleep(1);
 }
 
 void	send_message(pid_t pid, const char *message)

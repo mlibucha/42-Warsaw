@@ -6,7 +6,7 @@
 #include <ctime>
 
 Base* generate(void) {
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+    std::srand(static_cast<unsigned int>(std::time(NULL)));
     int random = std::rand() % 3;
 
     if (random == 0) {

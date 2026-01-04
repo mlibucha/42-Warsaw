@@ -4,7 +4,7 @@
 #include "Base.hpp"
 
 class A : public Base {
-    // No additional members or methods
+
 };
 
-#endif // A_HPP
+#endif

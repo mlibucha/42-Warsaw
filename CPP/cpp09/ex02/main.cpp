@@ -5,26 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/26 13:12:32 by e                 #+#    #+#             */
-/*   Updated: 2025/12/10 14:06:00 by mlibucha         ###   ########.fr       */
+/*   Created: 2026/01/03 15:10:54 by mlibucha          #+#    #+#             */
+/*   Updated: 2026/01/03 15:15:57 by mlibucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iter.hpp"
-#include <iostream>
-#include <cstddef>
 
-/* free function (not a lambda) so it works with -std=c++98 */
-static void printInt(int const &v)
+#include "PmergeMe.hpp"
+
+int main(int argc, char **argv)
 {
-	std::cout << v << std::endl;
-}
 
-int main(void)
-{
-	int arr[4] = {0, 1, 2, 3};
+	if(argc < 2 || argv[1] == NULL)
+	{
+		std::cerr << "Error: invalid number of arguments." << std::endl;
+		return 1;
+	}
+	PmergeMe sorter;
+	if (!sorter.parseInput(argc, argv))
+	{
+		std::cerr << "Error" << std::endl;
+		return 1;
+	}
 
-	iter(arr, 4, printInt);
+	std::cout << "Before: ";
+	sorter.printVector();
+
+	sorter.mergeInsertSortVector();
+	sorter.mergeInsertSortDeque();
+
+	std::cout << "After:  ";
+	sorter.printVector();
 
 	return 0;
 }

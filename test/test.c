@@ -47,7 +47,7 @@ void	sort_4_5(t_stack *a, t_stack *b)//leka zmiana co mi chat wyrzucil zamiast 2
 	while (b->size > 0)
 		pa(a, b);
 }
-
+#include <stdio.h>
 void	radix_sort(t_stack *a, t_stack *b)// dodatkowa funkcjA do sortowania zamiast sort_big
 {
 	int	max_num = a->size - 1;
@@ -58,6 +58,7 @@ void	radix_sort(t_stack *a, t_stack *b)// dodatkowa funkcjA do sortowania zamias
 
 	while ((max_num >> max_bits) != 0)
 		max_bits++;
+	printf("%dni\n", max_bits);
 	i = -1;
 	while (++i < max_bits)
 	{
@@ -66,7 +67,10 @@ void	radix_sort(t_stack *a, t_stack *b)// dodatkowa funkcjA do sortowania zamias
 		while (++j < size)
 		{
 			if (((a->top->index >> i) & 1) == 1)
-				ra(a);
+			{
+				printf("%dtest\n",);
+				ra(a);;
+			}
 			else
 				pb(a, b);
 		}

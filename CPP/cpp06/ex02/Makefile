@@ -1,7 +1,7 @@
 NAME    = ex00
 CXX     = c++
 CXXFLAGS= -Wall -Wextra -Werror -std=c++98
-SRCS    = main.cpp convert.cpp
+SRCS    = main.cpp Identifier.cpp Generator.cpp
 OBJS    = $(SRCS:.cpp=.o)
 INCS    = scalar.hpp
 RM      = rm -f

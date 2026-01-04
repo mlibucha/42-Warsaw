@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Serializer.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
+/*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 16:27:09 by e                 #+#    #+#             */
-/*   Updated: 2025/11/20 16:27:11 by e                ###   ########.fr       */
+/*   Updated: 2025/12/06 15:03:54 by mlibucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,12 @@
 
 class Serializer {
 private:
-    // Private constructor to prevent instantiation
     Serializer();
     Serializer(const Serializer& other);
     Serializer& operator=(const Serializer& other);
     ~Serializer();
 
 public:
-    // Static methods
     static uintptr_t serialize(Data* ptr);
     static Data* deserialize(uintptr_t raw);
 };

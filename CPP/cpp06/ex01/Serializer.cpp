@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Serializer.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
+/*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 16:26:54 by e                 #+#    #+#             */
-/*   Updated: 2025/11/20 16:36:01 by e                ###   ########.fr       */
+/*   Updated: 2025/12/06 15:04:13 by mlibucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Serializer.hpp"
 
-// Private constructor implementation
 Serializer::Serializer() {}
 
 Serializer::Serializer(const Serializer& other) {

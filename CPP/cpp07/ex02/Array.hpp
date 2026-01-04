@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Array.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: e <e@student.42.fr>                        +#+  +:+       +#+        */
+/*   By: mlibucha <mlibucha@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 14:56:56 by e                 #+#    #+#             */
-/*   Updated: 2025/11/28 14:14:59 by e                ###   ########.fr       */
+/*   Updated: 2025/12/10 14:06:44 by mlibucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ public:
             T* newArr = 0;
             if (other._size != 0) {
                 newArr = new T[other._size]();
-                for (std::size_t i = 0; i < other._size; ++i) {
+                for (std::size_t i = 0; i < other._size; i++) {
                     newArr[i] = other._arr[i];
                 }
             }

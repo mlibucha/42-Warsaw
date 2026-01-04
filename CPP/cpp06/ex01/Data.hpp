@@ -10,8 +10,6 @@ struct Data {
     double value;
     
     Data(int i = 0, const std::string& n = "", double v = 0.0);
-    
-    // For comparison
     bool operator==(const Data& other) const;
     
     void display() const;
