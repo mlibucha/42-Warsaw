@@ -13,34 +13,32 @@
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
-
-#include <iostream>
 #include <vector>
 #include <deque>
 #include <string>
-#include <sstream>
-#include <cctype>
-#include <cstdlib>
+#include <iostream>
 
+class PmergeMe {
+public:
+    PmergeMe();
+    ~PmergeMe();
 
+    // Parse argv into internal containers. Only positive integers (>0) are allowed.
+    bool parseInput(int argc, char** argv);
 
-class PmergeMe
-{
-	private:
-		std::vector<int>  vec;
-		std::deque<int>   deq;
-		
-	public:
-		PmergeMe();
-		~PmergeMe();
-		bool    parseInput(int argc, char** argv);
-		void    mergeInsertSortVector();
-		void    mergeInsertSortDeque();
-		void    printVector() const;
-		void    printDeque() const;
+    void printVector() const;
+    void printDeque() const;
+
+    void mergeInsertSortVector();
+    void mergeInsertSortDeque();
+
+    const std::vector<int>& getVector() const { return vec; }
+    const std::deque<int>& getDeque() const { return deq; }
+
+private:
+    std::vector<int> vec;
+    std::deque<int>  deq;
 };
 
-
-
-#endif
+#endif // PMERGEME_HPP
 

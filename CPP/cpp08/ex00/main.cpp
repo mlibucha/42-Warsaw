@@ -45,7 +45,7 @@ static void testList() {
 
 static void testDeque() {
     std::deque<int> dq;
-    for (int i = 0; i < 7; ++i) dq.push_back(i + 5); // 5 6 7 8 9 10 11
+    for (int i = 0; i < 7; ++i) dq.push_back(i + 5);
     std::cout << "Deque contents:";
     for (std::deque<int>::const_iterator it = dq.begin(); it != dq.end(); ++it) std::cout << ' ' << *it;
     std::cout << '\n';
