@@ -16,25 +16,23 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <sys/types.h>
 # include <sys/wait.h>
-# include <time.h>
-# include <pthread.h>
-# include <stdbool.h>
-# include <string.h>
-# include <sys/time.h>
 
-typedef struct s_pip
+typedef struct s_pipex
 {
-	char	*file1;
-	char	*file2;
-	int		fd1;
-	int		fd2;
-	char	*cmd1;
-	char	*cmd2;
+	int		here_doc;
+	int		cmd_start;
+	int		cmd_end;
+	int		infile_fd;
+	int		outfile_fd;
+}	t_pipex;
 
-}	t_pip;
-
-int		forking_your_mom(t_pip pip, char **envp);
+int		execute_pipeline(t_pipex *pipex, char **argv, char **envp);
+void	execute_command(char *cmd, char **envp);
+char	*file_path(char *cmd, char **envp);
 char	**ft_split(char const *str, char c);
 void	ft_free(char **strs);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

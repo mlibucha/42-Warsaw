@@ -59,87 +59,135 @@ void	execute_command(char *cmd, char **envp)
 {
 	char	*path;
 	char	**arg;
+	int		exit_code;
 
 	arg = ft_split(cmd, ' ');
-	if (!arg)
+	if (!arg || !arg[0])
 	{
-		write(2, "ERROR", 5);
-		exit(EXIT_FAILURE);
+		if (arg)
+			ft_free(arg);
+		write(2, "pipex: command not found\n", 25);
+		exit(127);
 	}
-	path = file_path(cmd, envp);
+	path = file_path(arg[0], envp);
 	if (!path)
 	{
+		write(2, "pipex: command not found: ", 26);
+		write(2, arg[0], ft_strlen(arg[0]));
+		write(2, "\n", 1);
 		ft_free(arg);
-		perror("Command not found");
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 	if (execve(path, arg, envp) == -1)
 	{
+		exit_code = 1;
+		if (errno == EACCES)
+			exit_code = 126;
+		perror(arg[0]);
 		free(path);
 		ft_free(arg);
-		perror("Error executing command");
-		exit(EXIT_FAILURE);
+		exit(exit_code);
 	}
 }
 
-void	child_pr1(t_pip pip, int *pipefd, char **envp)
+static int	decode_status(int status)
 {
-	close(pipefd[0]);
-	if (dup2(pip.fd1, STDIN_FILENO) == -1)
-	{
-		perror("dup2 failed for pip.fd1");
-		exit(EXIT_FAILURE);
-	}
-	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-	{
-		perror("dup2 failed for pipefd[1]");
-		exit(EXIT_FAILURE);
-	}
-	close(pip.fd1);
-	close(pipefd[1]);
-	execute_command(pip.cmd1, envp);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (1);
 }
 
-void	child_pr2(t_pip pip, int *pipefd, char **envp)
+static void	child_process(t_pipex *pipex, int in_fd, int *next_pipe, char *cmd,
+		char **envp)
 {
-	close(pipefd[1]);
-	if (dup2(pipefd[0], STDIN_FILENO) == -1)
+	if (in_fd < 0)
+		exit(1);
+	if (dup2(in_fd, STDIN_FILENO) == -1)
 	{
-		perror("dup2 failed for pipefd[0]");
-		exit(EXIT_FAILURE);
+		perror("dup2");
+		exit(1);
 	}
-	if (dup2(pip.fd2, STDOUT_FILENO) == -1)
+	if (next_pipe)
 	{
-		perror("dup2 failed for pip.fd2");
-		exit(EXIT_FAILURE);
+		if (dup2(next_pipe[1], STDOUT_FILENO) == -1)
+		{
+			perror("dup2");
+			exit(1);
+		}
 	}
-	close(pipefd[0]);
-	close(pip.fd2);
-	execute_command(pip.cmd2, envp);
+	else
+	{
+		if (pipex->outfile_fd < 0)
+			exit(1);
+		if (dup2(pipex->outfile_fd, STDOUT_FILENO) == -1)
+		{
+			perror("dup2");
+			exit(1);
+		}
+	}
+	if (next_pipe)
+	{
+		close(next_pipe[0]);
+		close(next_pipe[1]);
+	}
+	close(in_fd);
+	if (pipex->outfile_fd >= 0)
+		close(pipex->outfile_fd);
+	execute_command(cmd, envp);
 }
 
-int	forking_your_mom(t_pip pip, char **envp)
+int	execute_pipeline(t_pipex *pipex, char **argv, char **envp)
 {
-	int		pipefd[2];
-	pid_t	pid1;
-	pid_t	pid2;
+	int		current;
+	int		next_pipe[2];
+	int		children;
 	int		status;
+	int		last_status;
+	int		in_fd;
+	pid_t	last_pid;
+	pid_t	pid;
+	pid_t	waited;
 
-	if (pipe(pipefd) == -1)
-		return (perror("Pipe error"), 1);
-	pid1 = fork();
-	if (pid1 < 0)
-		return (perror("Fork error"), 1);
-	if (pid1 == 0)
-		child_pr1(pip, pipefd, envp);
-	pid2 = fork();
-	if (pid2 < 0)
-		return (perror("Fork error"), 1);
-	if (pid2 == 0)
-		child_pr2(pip, pipefd, envp);
-	close(pipefd[0]);
-	close(pipefd[1]);
-	waitpid(pid1, &status, 0);
-	waitpid(pid2, &status, 0);
-	return (WEXITSTATUS(status));
+	current = pipex->cmd_start;
+	in_fd = pipex->infile_fd;
+	children = pipex->cmd_end - pipex->cmd_start + 1;
+	last_status = 1;
+	last_pid = -1;
+	while (current <= pipex->cmd_end)
+	{
+		if (current < pipex->cmd_end && pipe(next_pipe) == -1)
+			return (perror("pipe"), 1);
+		pid = fork();
+		if (pid < 0)
+			return (perror("fork"), 1);
+		if (pid == 0)
+		{
+			if (current < pipex->cmd_end)
+				child_process(pipex, in_fd, next_pipe, argv[current], envp);
+			else
+				child_process(pipex, in_fd, NULL, argv[current], envp);
+		}
+		if (current == pipex->cmd_end)
+			last_pid = pid;
+		if (in_fd >= 0)
+			close(in_fd);
+		if (current < pipex->cmd_end)
+		{
+			close(next_pipe[1]);
+			in_fd = next_pipe[0];
+		}
+		current++;
+	}
+	while (children > 0)
+	{
+		waited = wait(&status);
+		if (waited < 0)
+			break ;
+		if (waited == last_pid)
+			last_status = status;
+		children--;
+	}
+	return (decode_status(last_status));
 }
